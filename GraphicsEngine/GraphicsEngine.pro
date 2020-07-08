@@ -16,16 +16,25 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    geometry.cpp \
     imagewidget.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    model.cpp \
+    mygl.cpp
 
 HEADERS += \
+    geometry.h \
     imagewidget.h \
-    mainwindow.h
+    mainwindow.h \
+    model.h \
+    mygl.h
 
 FORMS += \
     mainwindow.ui
+
+OTHER_FILES += \
+    models/test_thing.obj
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
