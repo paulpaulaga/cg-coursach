@@ -3,13 +3,27 @@
 
 #include <QImage>
 
-struct Point
+#include "geometry.h"
+
+class Bresenham
 {
-    int x;
-    int y;
+public:
+    Bresenham(Vec2i startPoint, Vec2i endPoint);
+    void step();
+    void nextY();
+    Vec2i p;
+private:
+    int e;
+    int dx, dy;
+    int sx, sy;
+    bool change;
 };
 
-void drawLine(QImage &image, Point startPoint, Point endPoint, QColor col = Qt::black);
+void drawLine(QImage &image, Vec2i startPoint, Vec2i endPoint, QColor col = Qt::black);
+
+void drawHorizontalLine(QImage &image, Vec2i startPoint, Vec2i endPoint, QColor col);
+
+void drawTriangle(QImage &image, Vec2i p0, Vec2i p1, Vec2i p2, QColor col = Qt::black);
 
 int sgn(int val);
 

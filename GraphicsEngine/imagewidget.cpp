@@ -14,7 +14,8 @@ void ImageWidget::resizeEvent(QResizeEvent *event)
 {
     image = QImage(this->width(), this->height(), QImage::Format_RGB32);
     image.fill(qRgb(255, 255, 255));
-    buildObjFile("/home/pavelcheklin/Code/BMSTU/cg-coursach/GraphicsEngine/models/test_thing.obj");
+//    buildObjFile("/home/pavelcheklin/Code/BMSTU/cg-coursach/GraphicsEngine/models/test_thing.obj");
+    drawTriangles();
 }
 
 void ImageWidget::clearImage()
@@ -44,10 +45,36 @@ void ImageWidget::buildObjFile(const char *filename)
             int y0 = (v0.y + 1.) * image.height() / 2;
             int x1 = (v1.x + 1.) * image.width() / 2;
             int y1 = (v1.y + 1.) * image.height() / 2;
-            drawLine(image, {x0, y0}, {x1, y1});
+            drawLine(image, Vec2i(x0, y0), Vec2i(x1, y1));
         }
     }
     QTransform myTransform;
     myTransform.rotate(180);
     image = image.transformed(myTransform);
 }
+
+void ImageWidget::drawTriangles()
+{
+    Vec2i p0(10, 10);
+    Vec2i p1(image.width() / 2, image.height() / 2);
+    Vec2i p2(10, image.height() - 10);
+    drawTriangle(image, p0, p1, p2, Qt::red);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

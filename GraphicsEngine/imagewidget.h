@@ -18,6 +18,7 @@ private:
     QImage image;
 
     void buildObjFile(const char *filename);
+    void drawTriangles();
 
 };
 
