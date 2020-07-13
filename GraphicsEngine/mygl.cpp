@@ -113,9 +113,7 @@ void drawTriangle(QImage &image, Vec2i p0, Vec2i p1, Vec2i p2, QColor col)
     if (p0.y > p1.y)
         swap(p0, p1);
 
-    // first rasterize 2 lines p0-p2 and p0-p1
     Bresenham p0p2(p0, p2), p0p1(p0, p1), p1p2(p1, p2);
-    cout << p0.y << " " << p1.y << " " << p2.y << endl;
     while (p0p1.p.y < p1.y)
     {
         drawHorizontalLine(image, p0p2.p, p0p1.p, col);

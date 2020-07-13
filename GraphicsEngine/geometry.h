@@ -59,6 +59,13 @@ struct Vec3
         return x * v.x + y * v.y + z * v.z;
     }
 
+    inline Vec3<T> operator ^(const Vec3<T> &v) const
+    {
+        return Vec3<T>(y * v.z - z * v.y,
+                       z * v.x - x * v.z,
+                       x * v.y - y * v.x);
+    }
+
     float norm() const
     {
         return sqrt(x * x + y * y + z * z);
