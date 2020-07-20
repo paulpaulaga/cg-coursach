@@ -37,20 +37,23 @@ void ImageWidget::buildObjFile(const char *filename)
 {
     Model m(filename);
     Vec3f light_dir(0,0,-1);
-    int *zBuffer = new int[image.width() * image.height()];
-    for (int i=0; i< m.faces_count(); i++) {
+    size_t zBufferSize = image.width() * image.height();
+    int *zBuffer = new int[zBufferSize];
+    int depth = 255;
+    for (int i = 0; i < m.faces_count(); i++) {
             std::vector<int> face = m.face(i);
             Vec3i screen_coords[3];
             Vec3f world_coords[3];
-            for (int j=0; j < 3; j++)
+            for (int j = 0; j < 3; j++)
             {
                 Vec3f v = m.vert(face[j]);
                 screen_coords[j] = Vec3i((v.x + 1) * image.width() / 2.,
                                          (v.y + 1) * image.height() / 2.,
-                                         v.z);
+                                         (v.z + 1) * depth / 2);
                 world_coords[j]  = v;
             }
-            Vec3f n = (world_coords[2]-world_coords[0])^(world_coords[1]-world_coords[0]);
+            Vec3f n = (world_coords[2] - world_coords[0]) ^
+                      (world_coords[1] - world_coords[0]);
             n.normalize();
             float intensity = n * light_dir;
             if (intensity > 0) {
