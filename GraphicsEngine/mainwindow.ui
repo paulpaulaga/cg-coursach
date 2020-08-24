@@ -16,7 +16,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="ImageWidget" name="iwidget" native="true"/>
+     <widget class="GLImageWidget" name="iwidget" native="true"/>
     </item>
     <item>
      <widget class="QPushButton" name="pushButton">
@@ -41,9 +41,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>ImageWidget</class>
+   <class>GLImageWidget</class>
    <extends>QWidget</extends>
-   <header>imagewidget.h</header>
+   <header>glimagewidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

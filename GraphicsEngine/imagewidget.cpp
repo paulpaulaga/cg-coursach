@@ -1,97 +1,38 @@
 #include "imagewidget.h"
 
-#include "model.h"
-
-#include <iostream>
-
-using namespace std;
-
-ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent),
-    image(this->width(), this->height(), QImage::Format_RGB32)
+ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent)
 {
-    setAutoFillBackground(false);
+
+}
+
+void ImageWidget::reprocess()
+{
+    image.fill(qRgb(0, 0, 0));
+}
+
+void ImageWidget::resizeImage(QImage *image, const QSize &newSize)
+{
+    if (image->size() == newSize)
+        return;
+
+    QImage newImage(newSize, QImage::Format_RGB32);
+    newImage.fill(qRgb(255, 255, 255));
+    QPainter painter(&newImage);
+    painter.drawImage(QPoint(0, 0), *image);
+    *image = newImage;
 }
 
 void ImageWidget::resizeEvent(QResizeEvent *event)
 {
-    image = QImage(this->width(), this->height(), QImage::Format_RGB32);
-    image.fill(qRgb(255, 255, 255));
-    buildObjFile("/home/pavelcheklin/Code/BMSTU/cg-coursach/GraphicsEngine/models/test_thing.obj");
-//    drawTriangles();
+    int newWidth = width();
+    int newHeight = height();
+
+    resizeImage(&image, QSize(newWidth, newHeight));
 }
 
-void ImageWidget::clearImage()
+void ImageWidget::paintEvent(QPaintEvent *event)
 {
-    image.fill(qRgb(255, 255, 255));
-    update();
-}
-
-void ImageWidget::paintEvent(QPaintEvent *)
-{
-    QRect imageRect(this->rect());
+    QRect thisRect = rect();
     QPainter p(this);
-    p.drawImage(imageRect, image, imageRect);
+    p.drawImage(thisRect, image, thisRect);
 }
-
-void ImageWidget::buildObjFile(const char *filename)
-{
-    Model m(filename);
-    Vec3f light_dir(0,0,-1);
-    size_t zBufferSize = image.width() * image.height();
-    int *zBuffer = new int[zBufferSize];
-    int depth = 255;
-    for (int i = 0; i < m.faces_count(); i++) {
-            std::vector<int> face = m.face(i);
-            Vec3i screen_coords[3];
-            Vec3f world_coords[3];
-            for (int j = 0; j < 3; j++)
-            {
-                Vec3f v = m.vert(face[j]);
-                screen_coords[j] = Vec3i((v.x + 1) * image.width() / 2.,
-                                         (v.y + 1) * image.height() / 2.,
-                                         (v.z + 1) * depth / 2);
-                world_coords[j]  = v;
-            }
-            Vec3f n = (world_coords[2] - world_coords[0]) ^
-                      (world_coords[1] - world_coords[0]);
-            n.normalize();
-            float intensity = n * light_dir;
-            if (intensity > 0) {
-               drawZTriangle(image, screen_coords[0], screen_coords[1], screen_coords[2],
-                       zBuffer, qRgba(intensity*255, intensity*255, intensity*255, 255));
-            }
-        }
-    QTransform myTransform;
-    myTransform.rotate(180);
-    image = image.transformed(myTransform);
-    delete[] zBuffer;
-}
-
-void ImageWidget::drawTriangles()
-{
-    drawLine(image, Vec2i(20, 34), Vec2i(744, 400), Qt::red);
-    drawLine(image, Vec2i(120, 434), Vec2i(444, 400), Qt::green);
-    drawLine(image, Vec2i(330, 463), Vec2i(594, 200), Qt::blue);
-
-    QTransform myTransform;
-    myTransform.rotate(180);
-    image = image.transformed(myTransform);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

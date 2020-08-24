@@ -2,24 +2,26 @@
 #define IMAGEWIDGET_H
 
 #include <QWidget>
+#include <QImage>
 #include <QPainter>
-
-#include "mygl.h"
 
 class ImageWidget : public QWidget
 {
     Q_OBJECT
 public:
     explicit ImageWidget(QWidget *parent = nullptr);
-    void paintEvent(QPaintEvent *event) override;
-    void resizeEvent(QResizeEvent *event) override;
-    void clearImage();
+
+    virtual void reprocess();
+
+protected:
+   QImage image;
+
+   void resizeEvent(QResizeEvent *event) override;
+
+   virtual void paintEvent(QPaintEvent *event) override;
+
 private:
-    QImage image;
-
-    void buildObjFile(const char *filename);
-    void drawTriangles();
-
+   void resizeImage(QImage *image, const QSize &size);
 };
 
 #endif // IMAGEWIDGET_H
