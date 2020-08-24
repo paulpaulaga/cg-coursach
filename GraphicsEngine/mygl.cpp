@@ -130,5 +130,4 @@ void drawTriangle(QImage &image, Vec2i p0, Vec2i p1, Vec2i p2, QColor col)
 
 void drawZTriangle(QImage &image, Vec3i p0, Vec3i p1, Vec3i p2, int *zBuffer, QColor col)
 {
-
 }

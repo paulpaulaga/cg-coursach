@@ -7,17 +7,14 @@
 
 using namespace std;
 
-
-Model::Model()
-{
-
-}
-
 Model::Model(const char *filename)
 {
     ifstream in(filename);
     if (in.fail())
+    {
+        cerr << "File doesn't exist" << endl;;
         return;
+    }
     string line;
     while(getline(in, line))
     {
@@ -47,7 +44,7 @@ Model::Model(const char *filename)
             faces_.push_back(f);
         }
     }
-    cerr << "# v#" << verts_.size() << "f#" << faces_.size() << endl;
+    cerr << "# v #" << verts_.size() << " f #" << faces_.size() << endl;
 }
 
 int Model::verts_count()

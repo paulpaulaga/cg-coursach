@@ -5,12 +5,21 @@
 #include "imagewidget.h"
 
 #include "mygl.h"
+#include "model.h"
 
 class GlImageProcesser : public ImageProcesser
 {
 public:
-    GlImageProcesser() = default;
+    GlImageProcesser();
+
     void process(QImage &image) override;
+
+    void drawWire(QImage &image);
+
+    void drawRandomColored(QImage &image);
+
+private:
+    Model model;
 };
 
 class GLImageWidget : public ImageWidget
@@ -20,6 +29,9 @@ public:
     explicit GLImageWidget(QWidget *parent = nullptr);
 
     void reprocess() override;
+
+    void resizeEvent(QResizeEvent *event) override;
+
 private:
     GlImageProcesser processer;
 };
