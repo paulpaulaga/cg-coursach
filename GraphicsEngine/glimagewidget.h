@@ -18,6 +18,8 @@ public:
 
     void drawRandomColored(QImage &image);
 
+    void drawFlatShaded(QImage &image);
+
 private:
     Model model;
 };
