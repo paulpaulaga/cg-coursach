@@ -1,6 +1,3 @@
-
-build-GraphicsEngine-Desktop_Qt_5_15_0_GCC_64bit-Debug/
-
+*build*
+*.idea*
 */.DS_Store
-
-build/*
